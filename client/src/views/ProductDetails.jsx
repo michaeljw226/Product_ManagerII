@@ -15,6 +15,7 @@ const ProductDetails = () => {
       .catch((err) => console.log(err));
   }, [id]);
   return (
+    
     <div>
       <h1>Product Details:</h1>
       <h2>{product.title}</h2>

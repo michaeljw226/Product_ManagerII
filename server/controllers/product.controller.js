@@ -38,7 +38,7 @@ module.exports.updateProduct = (req, res) => {
 };
 // Delete Product
 module.exports.deleteProduct = (req, res) => {
-  Product.findOneAndDelete({ _id: req.params.id })
+  Product.deleteOne({ _id: req.params.id })
     .then((status) => res.json(status))
     .catch((err) => res.status(400).json(err));
 };

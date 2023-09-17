@@ -17,6 +17,22 @@ const ProductListDisplay = () => {
             })
             .catch((err) => console.log(err));
     }, []);
+    const handleDelete = (deleteId) => {
+        axios
+        .delete(`http://localhost:8000/api/products/${deleteId}`)
+        .then(() => {
+            console.log("Deleted!");
+            removeFromDom(deleteId)
+        })
+        .catch((err) => console.log(err))
+    };
+
+    const removeFromDom = (deleteId) => {
+        const filteredList = productList.filter(
+            (eachProduct, idx) => eachProduct._id !== deleteId 
+        );
+        setLoaded(filteredList);
+    }
 
     return (
         <div>
@@ -24,10 +40,17 @@ const ProductListDisplay = () => {
             {
                 productList.map((oneProduct, idx) => {
                     return (
-                        <div key={idx}>
-                            <Link to={`/products/${oneProduct._id}`}>{oneProduct.title}</Link> 
-                            <Link to={`/products/${oneProduct._id}/edit`}>Edit</Link>
-                        </div>
+                        <>
+                            <div key={idx}>
+                                <Link to={`/products/${oneProduct._id}`}>{oneProduct.title}</Link>
+                            </div>
+                            <div>
+                                <Link to={`/products/${oneProduct._id}/edit`}>
+                                    <button>Edit Product</button>
+                                </Link>
+                                <button onClick={() => handleDelete(oneProduct._id)}>Delete Product</button>
+                            </div>
+                        </>
                     )
                 })
             }
